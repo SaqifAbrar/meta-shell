@@ -28,16 +28,22 @@ char* readInput(){
   return input;
 }
 
-void commands(char *input) {
-  if(strcmp(input, "ls") == 0){
-    //printf("%s\n", test);
+
+void noArgs(char *command) {
+  
+}
+
+int searchCommands(char **commands) {
+  if(strcmp(commands[0], "exit") == 0){
+    //kill
+    exit(1);
+  } else if (strcmp(commands[0], "ls") == 0) {
     printf("/usr/bin/ls -> test\n");
-  } else if(strcmp(input, "exit") == 0) {
-    //running = 0;
-    // exits loop to exit
   } else {
-    printf("--> %s: command not found\n", input);
+    printf("--> %s: command not found\n", commands[0]);
   }
+
+  return 1;
 }
 
 void printCommands(char **commands) {
@@ -104,22 +110,22 @@ char** interpretCommands(char *commands) {
   //return NULL;
 }
 
+/*
+  main control flow of the program
+*/
 void prompt() {
   int running = 1;
   //int pipes = 0;
 
   while(running) {
     char *input = readInput();
-    //printf("%s\n", input);
     char **commands = interpretCommands(input);
-    printCommands(commands);
-    //char *test = append("/user/bin/", "ls");
+    //printCommands(commands);
+    searchCommands(commands);
     //commands(input);
     freeString(input);
     //freeString(test);
   }
-
-  exit(1);
 }
 
 int main(int argc, char **argv) {
